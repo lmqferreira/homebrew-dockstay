@@ -4,18 +4,16 @@ cask "dockstay" do
 
   url "https://github.com/lmqferreira/dockstay/releases/download/v#{version}/DockStay.zip"
   name "DockStay"
-  desc "Pin your Mac Dock to one screen"
+  desc "Pin the Dock to one screen"
   homepage "https://github.com/lmqferreira/dockstay"
 
-  depends_on macos: ">= :ventura"
+  depends_on macos: :ventura
 
   app "DockStay.app"
 
-  postflight do
-    system_command "/usr/bin/xattr", args: ["-cr", "#{appdir}/DockStay.app"]
+  postflight_steps do
+    run "/usr/bin/xattr", args: ["-cr", "{{appdir}}/DockStay.app"]
   end
 
-  zap trash: [
-    "~/Library/Preferences/com.lmqferreira.dockstay.plist",
-  ]
+  zap trash: "~/Library/Preferences/com.lmqferreira.dockstay.plist"
 end
